@@ -2,16 +2,20 @@ name: "CodeQL"
 
 on:
   push:
-    branches: [main]
+    branches: [ main ]
   pull_request:
-    branches: [main]
+    branches: [ main ]
   schedule:
     - cron: '0 0 * * 0'
 
 jobs:
   analyze:
-    name: Analyze
+    name: Analyze Python
     runs-on: ubuntu-latest
+    permissions:
+      security-events: write
+      contents: read
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -20,13 +24,10 @@ jobs:
         uses: github/codeql-action/init@v3
         with:
           languages: python
-          # Uncomment if your code is in a subdirectory:
-          # source-root: ./src
-
-      - name: Autobuild
-        uses: github/codeql-action/autobuild@v2
+          build-mode: none   # 👈 important, Python does not use autobuild
+          # source-root: ./src   # 👈 uncomment if your Python code is inside /src
 
       - name: Perform CodeQL Analysis
-        uses: github/codeql-action/analyze@v2
+        uses: github/codeql-action/analyze@v3
         with:
           category: "/language:python"
