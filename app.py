@@ -5,6 +5,7 @@ from flask import request
 
 app = flask.Flask(__name__)
 
+
 # ❌ Hardcoded secret (CodeQL should flag this)
 API_KEY = "12345-SECRET-KEY"
 
