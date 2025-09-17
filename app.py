@@ -8,6 +8,9 @@ app = flask.Flask(__name__)
 # ❌ Hardcoded secret (CodeQL should flag this)
 API_KEY = "12345-SECRET-KEY"
 
+# ❌ Exposed secret in environment variable
+os.environ["SECURE_KEY"] = "super-secret-key"  # This should be flagged by CodeQL
+
 @app.route("/ping")
 def ping():
     # ❌ Command Injection vulnerability
